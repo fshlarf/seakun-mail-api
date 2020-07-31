@@ -24,7 +24,7 @@ router.post('/', (req, res, next) => {
             from: `${process.env.NAME} ${process.env.EMAIL}`,
             to: user.email,
             cc: process.env.EMAILCC,
-            subject: `Berlangganan ${user.provider} Paket ${user.packet} - Seakun.id`,
+            subject: `Berlangganan ${user.provider} ${user.packet} - Seakun.id`,
             template: 'registered-netflix',
             context: {
                 fullname: user.fullname,
