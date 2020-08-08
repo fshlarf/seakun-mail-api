@@ -37,4 +37,28 @@ router.post('/', (req, res, next) => {
     }
 })
 
+router.post('/created-account', (req, res, next) => {
+    let dataBody = req.body
+    if (req) {
+        let mailOptions = {
+            from: `${process.env.NAME} ${process.env.EMAIL}`,
+            to: dataBody.email,
+            cc: process.env.EMAILCC,
+            subject: `Akun ${dataBody.provider} ${dataBody.packet} - Seakun.id`,
+            template: 'created-netflix-account',
+            context: {
+                name: dataBody.name,
+                provider: dataBody.provider,
+                packet: dataBody.packet,
+                username: dataBody.username,
+                password: dataBody.password,
+                pin: dataBody.pin,
+                billing_date: dataBody.billing_date
+            }
+        }
+        sendMail(mailOptions)
+        res.send(dataBody)
+    }
+})
+
 module.exports = router
