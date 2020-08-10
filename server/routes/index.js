@@ -29,7 +29,7 @@ router.post('/', (req, res, next) => {
             context: {
                 fullname: user.fullname,
                 packet: user.packet,
-                price: `Rp ${user.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`
+                price: `Rp${user.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`
             }
         }
         sendMail(mailOptions)
@@ -54,6 +54,28 @@ router.post('/created-account', (req, res, next) => {
                 password: dataBody.password,
                 pin: dataBody.pin,
                 billing_date: dataBody.billing_date
+            }
+        }
+        sendMail(mailOptions)
+        res.send(dataBody)
+    }
+})
+
+router.post('/billing', (req, res, next) => {
+    let dataBody = req.body
+    if (req) {
+        let mailOptions = {
+            from: `${process.env.NAME} ${process.env.EMAIL}`,
+            to: dataBody.email,
+            cc: process.env.EMAILCC,
+            subject: `Reminder Tagihan Bulanan ${dataBody.packet} ${dataBody.provider} - Seakun.id`,
+            template: 'netflix-billing-monthly',
+            context: {
+                fullname: dataBody.fullname,
+                provider: dataBody.provider,
+                packet: dataBody.packet,
+                price: dataBody.price,
+                last_active_date: dataBody.last_active_date,
             }
         }
         sendMail(mailOptions)
