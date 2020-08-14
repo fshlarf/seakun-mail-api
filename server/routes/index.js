@@ -1,5 +1,23 @@
 const express = require('express')
 const transporter = require('../mail')
+const referalUsersData = [
+    {   
+        referal_code: 'anakusu',
+        name: 'Anak USU',
+        email: 'faishal1303@gmail.com',
+        date_agreement: '14 September 2020',
+        date_cashing: '14 September 2020',
+        profit: 'Rp1.000'
+    },
+    {
+        referal_code: 'israsyafira',
+        name: 'Isra Syafira',
+        email: 'faishal1303@gmail.com',
+        date_agreement: '14 September 2020',
+        date_cashing: '14 September 2020',
+        profit: 'Rp1.000'
+    }
+]
 
 const router = express.Router()
 
@@ -37,6 +55,31 @@ router.post('/', (req, res, next) => {
     }
 })
 
+const sendMailReferalCode = (dataBody) => {
+    dataBody && referalUsersData.map(e => {
+        if (e.referal_code == dataBody.referal_code) {
+            let mailOptions = {
+                referal_code: dataBody.referal_code,
+                from: `${process.env.NAME} ${process.env.EMAIL}`,
+                to: e.email,
+                cc: process.env.EMAILCC,
+                subject: `User Baru Referal dari ${e.name} - Seakun.id`,
+                template: 'referal-code',
+                context: {
+                    name: dataBody.name,
+                    referal_name: e.name,
+                    packet: dataBody.packet,
+                    provider: dataBody.provider,
+                    profit: e.profit,
+                    date_cashing: e.date_cashing,
+                    referal_code: dataBody.referal_code
+                }
+            }
+            sendMail(mailOptions)
+        }
+    })
+}
+
 router.post('/created-account', (req, res, next) => {
     let dataBody = req.body
     if (req) {
@@ -57,6 +100,7 @@ router.post('/created-account', (req, res, next) => {
             }
         }
         sendMail(mailOptions)
+        if (dataBody.referal_code) sendMailReferalCode(dataBody)
         res.send(dataBody)
     }
 })
