@@ -43,10 +43,11 @@ router.post('/', (req, res, next) => {
             to: user.email,
             cc: process.env.EMAILCC,
             subject: `Berlangganan ${user.provider} ${user.packet} - Seakun.id`,
-            template: 'registered-netflix',
+            template: 'registered-user',
             context: {
                 fullname: user.fullname,
                 packet: user.packet,
+                provider: user.provider,
                 price: `Rp${user.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`
             }
         }
