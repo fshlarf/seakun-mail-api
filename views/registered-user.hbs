@@ -31,10 +31,15 @@
         <h2 style="font-size:16px;font-weight:700;color:#86d0c1;">Hai {{fullname}},</h2>
         <p style="margin:15px 0 15px;font-size:14px;color:#787878;line-height:24px;">
           <!-- CHOOSED PACKAGE -->
-          Terimakasih telah berlangganan <b>{{ provider }}</b> dengan pilihan <b>{{ packet }}</b> via <b>Seakun.id</b>.
+          Terimakasih telah berlangganan <b>Netflix</b> dengan pilihan <b>{{ packet }}</b> via <b>Seakun.id</b>.
           <!-- PRICE -->
           Untuk biaya normalnya, dikenakan biaya total <b>{{ price }}</b> setiap bulannya.
         </p>
+        {{#if voucher}}
+          <p style="margin:15px 0 15px;font-size:14px;color:#787878;line-height:24px;">
+            Karena kamu menggunakan voucher <b>{{ voucher }}</b>, bulan ini akan dikenakan biaya sebesar <b>{{ discountprice }}</b>.
+          </p>
+        {{/if}}
         <p style="margin:15px 0 15px;font-size:14px;color:#787878;line-height:24px;">
           Untuk proses berikutnya, silahkan melakukan pembayaran ke rekening berikut.
           <br>
@@ -46,7 +51,11 @@
           <h4 style="margin-bottom: 0px;">No. rekening:</h4>
           <p style="font-weight: 800;font-size:18px;color:dodgerblue; margin: 0px;">1150007389705</p>
           <h4 style="margin-bottom: 0px;">Nominal Pembayaran:</h4>
-          <p style="font-weight: 800;font-size:18px;color:dodgerblue; margin-top: 0px;">{{ price }}</p>
+          {{#if voucher}}
+            <p style="font-weight: 800;font-size:18px;color:dodgerblue; margin-top: 0px;">{{ discountprice }}</p>
+          {{else}}
+            <p style="font-weight: 800;font-size:18px;color:dodgerblue; margin-top: 0px;">{{ price }}</p>
+          {{/if}}
           <br>
         </div>
         <p style="margin:15px 0 15px;font-size:14px;color:#787878;line-height:24px;">

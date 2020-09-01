@@ -48,7 +48,9 @@ router.post('/', (req, res, next) => {
                 fullname: user.fullname,
                 packet: user.packet,
                 provider: user.provider,
-                price: `Rp${user.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`
+                voucher: user.voucher,
+                price: `Rp${user.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`,
+                discountprice: `Rp${user.discountprice.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`,
             }
         }
         sendMail(mailOptions)
