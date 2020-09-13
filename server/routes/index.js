@@ -116,7 +116,7 @@ router.post('/billing', (req, res, next) => {
             to: dataBody.email,
             cc: process.env.EMAILCC,
             subject: `Reminder Tagihan Bulanan ${dataBody.packet} ${dataBody.provider} - Seakun.id`,
-            template: 'billing-monthly',
+            template: dataBody.provider == 'Netflix' ? 'netflix-billing-monthly' : 'spotify-billing-monthly',
             context: {
                 fullname: dataBody.fullname,
                 provider: dataBody.provider,
